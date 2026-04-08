@@ -1,21 +1,43 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'jdk17'
+        maven 'maven3'
+    }
+
     environment {
         IMAGE_NAME = "bike-game-image"
         CONTAINER_NAME = "bike-game-container"
     }
 
     stages {
+
         stage('Clone Code') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'udaycreed', url: 'https://github.com/Uday-63/Bike-gaming-app.git']])
+                checkout scmGit(
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[
+                        credentialsId: 'udaycreed',
+                        url: 'https://github.com/Uday-63/Bike-gaming-app.git'
+                    ]]
+                )
+            }
+        }
+
+        stage('Build with Maven') {
+            steps {
+                sh 'mvn clean install'
             }
         }
 
         stage('JENKINS TO NEXUS') {
             steps {
-                withMaven(globalMavenSettingsConfig: 'settings.xml', jdk: 'jdk17', maven: 'maven3', traceability: true) {
+                withMaven(
+                    maven: 'maven3',
+                    jdk: 'jdk17',
+                    mavenSettingsConfig: 'settings.xml'
+                ) {
                     sh 'mvn deploy'
                 }
             }
