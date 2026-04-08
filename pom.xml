@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.uday.gaming</groupId>
+    <artifactId>bike-game</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Uday Bike Racing Game</name>
+    <description>Bike racing game with DevOps pipeline integration</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.projectKey>bike-game</sonar.projectKey>
+        <sonar.projectName>BikeGame</sonar.projectName>
+        <sonar.sources>.</sonar.sources>
+        <sonar.exclusions>**/node_modules/**,**/dist/**</sonar.exclusions>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <url>http://65.0.205.161:8081//repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>http://65.0.205.161:8081//repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>bin</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>bike-game-${project.version}</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
