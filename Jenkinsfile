@@ -10,8 +10,7 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git branch: 'main',
-                url:'https://github.com/Uday-63/Bike-gaming-app.git'
+               checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'udaycreed', url: 'https://github.com/Uday-63/Bike-gaming-app.git']])
             }
         }
 
