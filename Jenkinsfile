@@ -7,10 +7,17 @@ pipeline {
     }
 
     stages {
-
         stage('Clone Code') {
             steps {
-               checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'udaycreed', url: 'https://github.com/Uday-63/Bike-gaming-app.git']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'udaycreed', url: 'https://github.com/Uday-63/Bike-gaming-app.git']])
+            }
+        }
+
+        stage('JENKINS TO NEXUS') {
+            steps {
+                withMaven(globalMavenSettingsConfig: 'settings.xml', jdk: 'jkd17', maven: 'maven3', traceability: true) {
+                    sh 'mvn deploy'
+                }
             }
         }
 
